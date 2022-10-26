@@ -1,11 +1,24 @@
 package ru.hogwarts.school.model;
 
+import nonapi.io.github.classgraph.json.Id;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import java.util.Objects;
 
+@Entity
 public class Faculty {
+    @javax.persistence.Id
+    @Id
+    @GeneratedValue
     private long id;
     private String name;
     private String color;
+
+    public Faculty(){
+
+    }
+
 
     @Override
     public String toString() {
@@ -52,4 +65,10 @@ public class Faculty {
     public void setColor(String color) {
         this.color = color;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
 }
