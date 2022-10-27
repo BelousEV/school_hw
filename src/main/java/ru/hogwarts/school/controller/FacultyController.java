@@ -6,23 +6,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyServiceImpl;
+import ru.hogwarts.school.service.StudentServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 
-import static ru.hogwarts.school.service.FacultyServiceImpl.faculties;
+
 
 @RestController
 @RequestMapping("faculties")
 public class FacultyController {
 
-    @Autowired
+
     private FacultyServiceImpl facultyServiceImpl;
 
     public FacultyController(FacultyServiceImpl facultyServiceImpl) {
-        this.facultyServiceImpl = facultyServiceImpl;
+         this.facultyServiceImpl = facultyServiceImpl;
     }
     @GetMapping("{id}") //http://localhost:8081/faculties/23
 
@@ -52,9 +53,10 @@ public class FacultyController {
 
     @DeleteMapping ("{id}") //удаление по айди http://localhost:8081/faculties/23
 
-    public Faculty deleteFaculty(@PathVariable long id) {
+    public ResponseEntity deleteFaculty(@PathVariable long id) {
 
-        return FacultyServiceImpl.deleteFaculty(id);
+        FacultyServiceImpl.deleteFaculty(id);
+        return ResponseEntity.ok().build();
     }
 
     //1909

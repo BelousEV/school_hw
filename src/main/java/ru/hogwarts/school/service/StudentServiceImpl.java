@@ -13,7 +13,7 @@ import java.util.Map;
 @Service
 public class StudentServiceImpl {
 
-    private  StudentRepository studentRepository;
+    private  final StudentRepository studentRepository;
 
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -32,7 +32,7 @@ public class StudentServiceImpl {
     }
 
     public  void deleteStudent(long id) {
-         studentRepository.delete(id);
+         studentRepository.deleteById(id);
     }
 
     public Collection<Student> getAllStudent(){
@@ -40,13 +40,13 @@ public class StudentServiceImpl {
     }
 
     // Service
-    public Collection<Student> findByAge(int age) {
-        ArrayList<Student> result = new ArrayList< >();
-        for (Student student : students.values()) {
-            if (student.getAge() == age) {
-                result.add(student);
-            }
-        }
-        return result;
+//    public Collection<Student> findByAge(int age) {
+//        ArrayList<Student> result = new ArrayList< >();
+//        for (Student student : students.values()) {
+//            if (student.getAge() == age) {
+//                result.add(student);
+//            }
+//        }
+//        return result;
     }
-}
+

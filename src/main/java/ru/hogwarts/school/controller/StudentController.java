@@ -18,10 +18,11 @@ import java.util.Collections;
 
 public class StudentController {
 
-    @Autowired
-    private StudentServiceImpl studentService;
+
+    private final StudentServiceImpl studentService;
 
     public StudentController(StudentServiceImpl studentService) {
+
         this.studentService = studentService;
     }
 
