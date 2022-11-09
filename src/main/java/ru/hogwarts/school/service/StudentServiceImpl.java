@@ -11,42 +11,42 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class StudentServiceImpl {
-
-    private  final StudentRepository studentRepository;
+public class StudentServiceImpl implements StudentService {
+    private final StudentRepository studentRepository;
 
     public StudentServiceImpl(StudentRepository studentRepository) {
+
         this.studentRepository = studentRepository;
     }
 
-    public  Student createStudent(Student student) {
-         return studentRepository.save(student);
-    }
-
-    public  Student findStudent(long id) {
-        return studentRepository.getById(id);
-    }
-
-    public  Student editStudent(Student student) {
+    public Student createStudent(Student student) {
         return studentRepository.save(student);
     }
 
-    public  void deleteStudent(long id) {
-         studentRepository.deleteById(id);
+    public Student findStudent(long id) {
+        return studentRepository.getById(id);
     }
 
-    public Collection<Student> getAllStudent(){
+    public Student editStudent(Student student) {
+        return studentRepository.save(student);
+    }
+
+    public void deleteStudent(long id) {
+        studentRepository.deleteById(id);
+    }
+
+    public Collection<Student> getAllStudent() {
         return studentRepository.findAll();
     }
 
     // Service
-//    public Collection<Student> findByAge(int age) {
-//        ArrayList<Student> result = new ArrayList< >();
-//        for (Student student : students.values()) {
-//            if (student.getAge() == age) {
-//                result.add(student);
-//            }
-//        }
-//        return result;
+    public Collection<Student> findByAge(int age) {
+        ArrayList<Student> result = new ArrayList<>();
+        for (Student student : studentRepository.findAll()) {
+            if (student.getAge() == age) {
+                result.add(student);
+            }
+        }
+        return result;
     }
-
+}

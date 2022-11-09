@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.service.FacultyService;
 import ru.hogwarts.school.service.FacultyServiceImpl;
 import ru.hogwarts.school.service.StudentServiceImpl;
 
@@ -20,17 +21,17 @@ import java.util.Objects;
 public class FacultyController {
 
 
-    private FacultyServiceImpl facultyServiceImpl;
+    private FacultyService facultyService;
 
-    public FacultyController(FacultyServiceImpl facultyServiceImpl) {
-         this.facultyServiceImpl = facultyServiceImpl;
+    public FacultyController(FacultyService initFacultyService) {
+         facultyService = initFacultyService;
     }
     @GetMapping("{id}") //http://localhost:8081/faculties/23
 
     public ResponseEntity <Faculty> getFacultyInfo(@PathVariable long id) {
-        Faculty faculty = FacultyServiceImpl.findFaculty(id);
+        Faculty faculty = facultyService.findFaculty(id);
         if (faculty == null) {
-            ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(faculty);
 
@@ -40,11 +41,12 @@ public class FacultyController {
 
     @PostMapping // POST http://localhost:8081/faculties
     public Faculty createFaculty(@RequestBody Faculty faculty) {
-        return FacultyServiceImpl.createFaculty(faculty);
+        return facultyService.createFaculty(faculty);
     }
+
     @PutMapping //http://localhost:8081/faculties
     public ResponseEntity <Faculty> editFaculty(@RequestBody Faculty faculty){
-        Faculty foundFaculty = FacultyServiceImpl.editFaculty(faculty);
+        Faculty foundFaculty = facultyService.editFaculty(faculty);
         if (foundFaculty == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -53,9 +55,9 @@ public class FacultyController {
 
     @DeleteMapping ("{id}") //удаление по айди http://localhost:8081/faculties/23
 
-    public ResponseEntity deleteFaculty(@PathVariable long id) {
+    public ResponseEntity<?> deleteFaculty(@PathVariable long id) {
 
-        FacultyServiceImpl.deleteFaculty(id);
+        facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
 
@@ -65,7 +67,7 @@ public class FacultyController {
     @GetMapping
     public ResponseEntity<Collection<Faculty>> findFaculties(@RequestParam(required = false) String color) {
         if (color != null && !color.isBlank()) {
-            return ResponseEntity.ok(facultyServiceImpl.findByColor(color));
+            return ResponseEntity.ok(facultyService.findByColor(color));
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
