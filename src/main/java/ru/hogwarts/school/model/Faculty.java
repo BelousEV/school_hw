@@ -11,7 +11,7 @@ public class Faculty {
     @javax.persistence.Id
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     private String name;
     private String color;
 
@@ -42,12 +42,8 @@ public class Faculty {
         return Objects.hash(id, name, color);
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {

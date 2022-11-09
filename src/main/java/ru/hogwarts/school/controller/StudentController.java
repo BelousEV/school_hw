@@ -26,8 +26,8 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("{id}") //GET http://localhost:8081/students/23
-    public ResponseEntity <Student> getStudentInfo(@PathVariable long id) {
+    @GetMapping("{id}") //GET http://localhost:8081/students/id
+    public ResponseEntity <Student> getStudentInfo(@PathVariable Long id) {
         Student student = studentService.findStudent(id);
         if (student == null) {
             return ResponseEntity.notFound().build();
@@ -53,7 +53,7 @@ public class StudentController {
 
     @DeleteMapping ("{id}") //DELETE http://localhost:8081/students/23
 
-    public ResponseEntity<?> deleteStudent(@PathVariable long id) {
+    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
@@ -62,7 +62,7 @@ public class StudentController {
 
     // Controller
     @GetMapping
-    public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) int age) {
+    public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) Long age) {
         if (age > 0) {
             return ResponseEntity.ok(studentService.findByAge(age));
         }

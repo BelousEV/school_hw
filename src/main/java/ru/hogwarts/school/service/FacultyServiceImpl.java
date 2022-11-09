@@ -23,16 +23,15 @@ public class FacultyServiceImpl implements FacultyService {
         return facultyRepository.save(faculty);
     }
 
-    public  Faculty findFaculty(long id) {
-
-        return facultyRepository.getById(id);
-            }
+    public  Faculty findFaculty(Long id) {
+        return facultyRepository.getReferenceById(id);
+    }
     public  Faculty editFaculty(Faculty faculty) {
 
         return facultyRepository.save(faculty);
     }
 
-    public  void  deleteFaculty(long id) {
+    public  void  deleteFaculty(Long id) {
 
         facultyRepository.deleteById(id);
     }

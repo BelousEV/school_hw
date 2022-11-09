@@ -28,7 +28,7 @@ public class FacultyController {
     }
     @GetMapping("{id}") //http://localhost:8081/faculties/23
 
-    public ResponseEntity <Faculty> getFacultyInfo(@PathVariable long id) {
+    public ResponseEntity <Faculty> getFacultyInfo(@PathVariable Long id) {
         Faculty faculty = facultyService.findFaculty(id);
         if (faculty == null) {
             return ResponseEntity.notFound().build();
@@ -55,7 +55,7 @@ public class FacultyController {
 
     @DeleteMapping ("{id}") //удаление по айди http://localhost:8081/faculties/23
 
-    public ResponseEntity<?> deleteFaculty(@PathVariable long id) {
+    public ResponseEntity<?> deleteFaculty(@PathVariable Long id) {
 
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();

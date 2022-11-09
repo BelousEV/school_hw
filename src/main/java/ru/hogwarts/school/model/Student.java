@@ -12,9 +12,9 @@ public class Student {
     @javax.persistence.Id
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     private String name;
-    private int age;
+    private Long age;
     public Student (){
 
     }
@@ -41,7 +41,7 @@ public class Student {
         return Objects.hash(id, name, age);
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -57,11 +57,11 @@ public class Student {
         this.name = name;
     }
 
-    public int getAge() {
+    public Long getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Long age) {
         this.age = age;
     }
 
