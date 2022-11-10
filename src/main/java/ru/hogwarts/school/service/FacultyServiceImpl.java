@@ -35,21 +35,14 @@ public class FacultyServiceImpl implements FacultyService {
 
         facultyRepository.deleteById(id);
     }
-    public Collection<Faculty> getAllFaculties(){
+    public Collection<Faculty> getAll(){
         return facultyRepository.findAll();
     }
     // Service
 
 
     public Collection<Faculty> findByColor(String color) {
-         ArrayList<Faculty> result = new ArrayList<>();
-         for (Faculty faculty : facultyRepository.findAll()) {
-             if (Objects.equals(faculty.getColor(), color)) {
-
-                   result.add(faculty);
-            }
-        }
-        return result;
+        return facultyRepository.findByColor(color);
     }
 
 }

@@ -20,11 +20,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public Student createStudent(Student student) {
+
         return studentRepository.save(student);
     }
 
     public Student findStudent(Long id) {
-        return studentRepository.getReferenceById(id);
+        return studentRepository.getOne(id);
     }
 
     public Student editStudent(Student student) {
@@ -35,18 +36,12 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.deleteById(id);
     }
 
-    public Collection<Student> getAllStudent() {
+    public Collection<Student> getAll() {
         return studentRepository.findAll();
     }
 
     // Service
     public Collection<Student> findByAge(Long age) {
-        ArrayList<Student> result = new ArrayList<>();
-        for (Student student : studentRepository.findAll()) {
-            if (student.getAge() == age) {
-                result.add(student);
-            }
-        }
-        return result;
+        return studentRepository.findByAge(age);
     }
 }

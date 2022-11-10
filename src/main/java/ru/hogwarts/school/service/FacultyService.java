@@ -22,4 +22,5 @@ public interface FacultyService {
     void deleteFaculty(Long id);
 
     public Collection<Faculty> findByColor(String color);
+    public Collection<Faculty> getAll();
 }
