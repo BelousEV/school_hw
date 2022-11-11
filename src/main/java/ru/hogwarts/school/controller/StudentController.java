@@ -1,16 +1,14 @@
 package ru.hogwarts.school.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-
+import java.util.Optional;
 
 
 @RestController
@@ -28,11 +26,11 @@ public class StudentController {
 
     @GetMapping("{id}") //GET http://localhost:8081/students/id
     public ResponseEntity<Student> getStudent(@PathVariable Long id) {
-        Student student = studentService.findStudent(id);
+        Optional<Student> student = studentService.findStudent(id);
         if (student == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(student);
+        return ResponseEntity.ok(student.get());
 
     }
 

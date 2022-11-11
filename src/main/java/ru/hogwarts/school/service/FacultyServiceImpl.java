@@ -2,7 +2,6 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.FacultyRepository;
 
 import java.util.*;
@@ -23,8 +22,8 @@ public class FacultyServiceImpl implements FacultyService {
         return facultyRepository.save(faculty);
     }
 
-    public  Faculty findFaculty(Long id) {
-        return facultyRepository.getReferenceById(id);
+    public Optional<Faculty> findFaculty(Long id) {
+        return facultyRepository.findById(id);
     }
     public  Faculty editFaculty(Faculty faculty) {
 
