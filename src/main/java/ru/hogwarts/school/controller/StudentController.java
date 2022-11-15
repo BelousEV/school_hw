@@ -73,11 +73,11 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAll());
     }
 
-    @GetMapping("/1/")
-    public ResponseEntity findByFacultyId(@RequestParam Long facultyId) {
-        if (facultyId != null) {
-            return ResponseEntity.ok(studentService.findByFacultyId(facultyId));
-        }
-        return ResponseEntity.ok(studentService.getAll());
-    }
+//    @GetMapping
+//    public ResponseEntity findAllByFacultyId(@RequestParam Long facultyId) {
+//        if (facultyId != null) {
+//            return ResponseEntity.ok(studentService.findAllByFacultyId(facultyId));
+//        }
+//        return ResponseEntity.ok(studentService.getAll());
+//    }
 }

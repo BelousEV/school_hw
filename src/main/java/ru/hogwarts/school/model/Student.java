@@ -15,7 +15,7 @@ public class Student {
     private String name;
     private Long age;
     @ManyToOne
-    @JoinColumn(name = "facultyId")
+    @JoinColumn(name = "faculty_id")
     private Faculty faculty;
     public Student (){
 

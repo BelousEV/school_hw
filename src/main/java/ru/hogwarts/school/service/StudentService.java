@@ -21,5 +21,5 @@ public interface StudentService {
 
     Collection <Student>findByAgeBetween(Long age_min, Long age_max); // добавила для запросов БД
 
-    Collection<Student> findByFacultyId(Long facultyId);
+//    Collection<Student> findAllByFacultyId(Long facultyId);
 }
