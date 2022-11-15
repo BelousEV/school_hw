@@ -18,4 +18,6 @@ public interface FacultyService {
 
     public Collection<Faculty> findByColor(String color);
     public Collection<Faculty> getAll();
+
+    Collection<Faculty> findByNameOrColorIgnoreCase(String name, String color);
 }

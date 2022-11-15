@@ -3,6 +3,8 @@ package ru.hogwarts.school.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +14,9 @@ public class Student {
     private Long id;
     private String name;
     private Long age;
+    @ManyToOne
+    @JoinColumn(name = "facultyId")
+    private Faculty faculty;
     public Student (){
 
     }
@@ -20,6 +25,7 @@ public class Student {
     public String toString() {
         return "Student{" +
                 "id=" + id +
+                "Fid=" + faculty.getId() +
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 '}';
@@ -30,19 +36,25 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return id == student.id && age == student.age && Objects.equals(name, student.name);
+        return id == student.id
+                && age == student.age
+                && faculty.getId() == student.faculty.getId()
+                && Objects.equals(name, student.name)
+                ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age);
+        return Objects.hash(id, name, age, faculty.getId());
     }
 
     public Long getId() {
         return id;
     }
 
-
+    public Long getFacultyId() {
+        return faculty.getId();
+    }
 
     public String getName() {
         return name;
@@ -64,6 +76,8 @@ public class Student {
         this.id = id;
     }
 
-
+    public void setFaculty(Faculty f) {
+        faculty = f;
+    }
 
 }

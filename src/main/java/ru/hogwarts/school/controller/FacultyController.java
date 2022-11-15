@@ -60,10 +60,16 @@ public class FacultyController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
-    @GetMapping
+
     public ResponseEntity<Collection<Faculty>> getAll() {
+        return ResponseEntity.ok(facultyService.getAll());//вероятно, лишнее о_О
+    }
+    @GetMapping
+    public ResponseEntity findByNameOrColorIgnoreCase(@RequestParam String name, String color) {
+        if (name != null && !name.isBlank()) {
+            return ResponseEntity.ok(facultyService.findByNameOrColorIgnoreCase(name, color));
+        }
         return ResponseEntity.ok(facultyService.getAll());
     }
-
 }
 

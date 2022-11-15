@@ -44,4 +44,9 @@ public class FacultyServiceImpl implements FacultyService {
         return facultyRepository.findByColor(color);
     }
 
+    public Collection <Faculty> findByNameOrColorIgnoreCase (String name,String color) { //для БД
+        return facultyRepository.findByNameOrColorIgnoreCase(name, color);
+    }
+
+
 }

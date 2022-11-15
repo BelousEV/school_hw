@@ -18,4 +18,8 @@ public interface StudentService {
 
     public Collection<Student> findByAge(Long age);
     public Collection<Student> getAll();
+
+    Collection <Student>findByAgeBetween(Long age_min, Long age_max); // добавила для запросов БД
+
+    Collection<Student> findByFacultyId(Long facultyId);
 }

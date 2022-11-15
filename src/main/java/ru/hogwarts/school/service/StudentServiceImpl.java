@@ -41,4 +41,12 @@ public class StudentServiceImpl implements StudentService {
     public Collection<Student> findByAge(Long age) {
         return studentRepository.findByAge(age);
     }
+    public Collection<Student> findByAgeBetween(Long age_min, Long age_max) { //для БД
+        return studentRepository.findByAgeBetween(age_min, age_max);
+    }
+
+    public Collection<Student> findByFacultyId(Long facultyId) {
+        return studentRepository.findByFacultyId(facultyId);
+    }
+
 }

@@ -41,21 +41,20 @@ public class StudentController {
     }
 
     @PutMapping  //PUT редактирование http://localhost:8081/students
-    public ResponseEntity <Student> editStudent (@RequestBody Student student){
-      Student foundStudent = studentService.editStudent(student);
+    public ResponseEntity<Student> editStudent(@RequestBody Student student) {
+        Student foundStudent = studentService.editStudent(student);
         if (foundStudent == null) {
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok (foundStudent);
+        return ResponseEntity.ok(foundStudent);
     }
 
-    @DeleteMapping ("{id}") //DELETE http://localhost:8081/students/23
+    @DeleteMapping("{id}") //DELETE http://localhost:8081/students/23
     public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
 
-    //1909
 
     // Controller
     @GetMapping("/age/{age}")
@@ -66,9 +65,19 @@ public class StudentController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
-    @GetMapping
-    public ResponseEntity<Collection<Student>> getAll() {
+    @GetMapping // для SQL БД (пока не фурычит)
+    public ResponseEntity findStudent(@RequestParam Long age_min, Long age_max) {
+        if (age_max != null && age_min != null) {
+            return ResponseEntity.ok(studentService.findByAgeBetween(age_min, age_max));
+        }
         return ResponseEntity.ok(studentService.getAll());
     }
 
+    @GetMapping("/1/")
+    public ResponseEntity findByFacultyId(@RequestParam Long facultyId) {
+        if (facultyId != null) {
+            return ResponseEntity.ok(studentService.findByFacultyId(facultyId));
+        }
+        return ResponseEntity.ok(studentService.getAll());
+    }
 }
