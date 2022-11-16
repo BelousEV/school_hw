@@ -1,11 +1,8 @@
 package ru.hogwarts.school.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 import java.util.Objects;
+import java.util.Optional;
 
 @Entity
 public class Student {
@@ -36,9 +33,9 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return id == student.id
-                && age == student.age
-                && faculty.getId() == student.faculty.getId()
+        return id.equals(student.id)
+                && age.equals(student.age)
+                && faculty.getId().equals(student.faculty.getId())
                 && Objects.equals(name, student.name)
                 ;
     }
@@ -78,6 +75,10 @@ public class Student {
 
     public void setFaculty(Faculty f) {
         faculty = f;
+    }
+
+    public Optional<Faculty> getFaculty() {
+        return Optional.ofNullable(faculty);
     }
 
 }

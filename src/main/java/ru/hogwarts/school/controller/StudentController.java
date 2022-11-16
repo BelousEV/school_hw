@@ -3,6 +3,7 @@ package ru.hogwarts.school.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
@@ -27,7 +28,7 @@ public class StudentController {
     @GetMapping("{id}") //GET http://localhost:8081/students/id
     public ResponseEntity<Student> getStudent(@PathVariable Long id) {
         Optional<Student> student = studentService.findStudent(id);
-        if (student == null) {
+        if (student.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(student.get());
@@ -50,7 +51,7 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}") //DELETE http://localhost:8081/students/23
-    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<Long> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
@@ -65,19 +66,25 @@ public class StudentController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
-    @GetMapping // для SQL БД (пока не фурычит)
-    public ResponseEntity findStudent(@RequestParam Long age_min, Long age_max) {
-        if (age_max != null && age_min != null) {
-            return ResponseEntity.ok(studentService.findByAgeBetween(age_min, age_max));
+    @GetMapping // для SQL БД
+    public ResponseEntity<Collection<Student>> findStudent(@RequestParam Long ageMin, @RequestParam Long ageMax) {
+        Collection<Student> answer = studentService.findByAgeBetween(ageMin, ageMax);
+        if (answer.isEmpty()) {
+            return ResponseEntity.ok(Collections.emptyList());
         }
-        return ResponseEntity.ok(studentService.getAll());
+        return ResponseEntity.ok(answer);
     }
 
-//    @GetMapping
-//    public ResponseEntity findAllByFacultyId(@RequestParam Long facultyId) {
-//        if (facultyId != null) {
-//            return ResponseEntity.ok(studentService.findAllByFacultyId(facultyId));
-//        }
-//        return ResponseEntity.ok(studentService.getAll());
-//    }
+    @GetMapping("/getFacultyFromStudentById")
+    public ResponseEntity<Faculty> findFacultyFromStudentById(@RequestParam Long id) {
+        Optional<Student> studentOptional = studentService.findStudent(id);
+        if (studentOptional.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        Optional<Faculty> optionalFaculty = studentOptional.get().getFaculty();
+        if (optionalFaculty.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(optionalFaculty.get());
+    }
 }

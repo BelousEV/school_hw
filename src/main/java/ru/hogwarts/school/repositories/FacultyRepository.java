@@ -7,14 +7,7 @@ import java.util.Collection;
 
 
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
-
-
-    Collection<Faculty> findByNameOrColorIgnoreCase (String name, String color);
-    //Добавить эндпоинт для поиска факультета по имени или цвету, игнорируя регистр,
-    // т.е в GET-запросе будет передана строка, по которой будет происходить фильтрация.
-
-
-
+    Collection<Faculty> findByNameIgnoreCaseContaining(String name);
+    Collection<Faculty> findByColorIgnoreCaseContaining(String color);
     Collection<Faculty> findByColor(String color);
-
 }
