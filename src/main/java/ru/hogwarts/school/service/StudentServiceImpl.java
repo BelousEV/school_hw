@@ -52,5 +52,4 @@ public class StudentServiceImpl implements StudentService {
             return Optional.empty();
         return studentOptional.get().getFaculty();
     }
-
 }

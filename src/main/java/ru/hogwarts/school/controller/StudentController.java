@@ -20,9 +20,11 @@ public class StudentController {
 
     private final StudentService studentService;
 
+
     public StudentController(StudentService studentService) {
 
         this.studentService = studentService;
+
     }
 
     @GetMapping("{id}") //GET http://localhost:8081/students/id
@@ -77,14 +79,10 @@ public class StudentController {
 
     @GetMapping("/getFacultyFromStudentById")
     public ResponseEntity<Faculty> findFacultyFromStudentById(@RequestParam Long id) {
-        Optional<Student> studentOptional = studentService.findStudent(id);
-        if (studentOptional.isEmpty())
+        Optional<Faculty> facultyOptional = studentService.findFacultyFromStudentById(id);
+        if (facultyOptional.isEmpty())
             return ResponseEntity.notFound().build();
-
-        Optional<Faculty> optionalFaculty = studentOptional.get().getFaculty();
-        if (optionalFaculty.isEmpty())
-            return ResponseEntity.notFound().build();
-
-        return ResponseEntity.ok(optionalFaculty.get());
+        return ResponseEntity.ok(facultyOptional.get());
     }
+
 }

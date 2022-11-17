@@ -42,9 +42,9 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     public Collection<Faculty> findByNameContainingOrColorContaining(String nameOrColor) { //для БД
-        Collection<Faculty> answer = facultyRepository.findByNameIgnoreCaseContaining(nameOrColor);
+        Collection<Faculty> answer = facultyRepository.findByNameIgnoreCaseContainingOrColorIgnoreCaseContaining(nameOrColor, nameOrColor);
         if (answer.isEmpty())
-            answer = facultyRepository.findByColorIgnoreCaseContaining(nameOrColor);
+            return Collections.emptyList();
         return answer;
     }
 
