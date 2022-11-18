@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("students")
-
 public class StudentController {
 
 
@@ -85,4 +84,10 @@ public class StudentController {
         return ResponseEntity.ok(facultyOptional.get());
     }
 
+//    @PostMapping(value = "/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE) // загрузка файла
+//    public ResponseEntity<String> uploadAvatar(@PathVariable Long studentId, @RequestParam MultipartFile avatar)
+//            throws IOException {
+//        studentService.findAvatarFromStudentById(studentId);
+//        return ResponseEntity.ok().build();
+//    }
 }

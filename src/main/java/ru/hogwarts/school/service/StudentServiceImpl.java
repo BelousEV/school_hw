@@ -1,6 +1,7 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
@@ -51,5 +52,12 @@ public class StudentServiceImpl implements StudentService {
         if (studentOptional.isEmpty())
             return Optional.empty();
         return studentOptional.get().getFaculty();
+    }
+
+    public Optional<Avatar> findAvatarFromStudentById(Long id) {
+        Optional<Student> studentOptional = findStudent(id);
+        if (studentOptional.isEmpty())
+            return Optional.empty();
+        return studentOptional.get().getAvatar();
     }
 }

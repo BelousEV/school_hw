@@ -14,6 +14,10 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
+
+    @OneToOne
+    @JoinColumn(name = "avatar_id")
+    private Avatar avatar;
     public Student (){
 
     }
@@ -80,5 +84,7 @@ public class Student {
     public Optional<Faculty> getFaculty() {
         return Optional.ofNullable(faculty);
     }
-
+    public Optional<Avatar> getAvatar() {
+        return Optional.ofNullable(avatar);
+    }
 }

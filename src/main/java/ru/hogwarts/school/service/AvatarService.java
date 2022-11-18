@@ -12,55 +12,42 @@ import javax.transaction.Transactional;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Optional;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 @Transactional
-
 public class AvatarService {
 
     @Value("${path.to.avatars.folder}")
     private String avatarsDir; // название папки, в которой хранятся авы
 
-private final StudentServiceImpl studentServiceImpl;
-private final FacultyServiceImpl facultyServiceImpl;
 private final AvatarRepository avatarRepository;
-private final StudentService studentService;
 private final StudentRepository studentRepository;
 
-    public AvatarService(StudentServiceImpl studentServiceImpl, FacultyServiceImpl facultyServiceImpl, AvatarRepository avatarRepository, StudentService studentService, StudentRepository studentRepository) {
-        this.studentServiceImpl = studentServiceImpl;
-        this.facultyServiceImpl = facultyServiceImpl;
+    public AvatarService(AvatarRepository avatarRepository, StudentRepository studentRepository) {
         this.avatarRepository = avatarRepository;
-        this.studentService = studentService;
         this.studentRepository = studentRepository;
     }
-
-
-
     //методы для аватара
 
 
     // метод для загрузки файла
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
         Student student = studentRepository.getById(studentId);
+
         Path filePath = Path.of(avatarsDir, studentId + "." + getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
         try (
                 InputStream is = avatarFile.getInputStream();
                 OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
-                BufferedInputStream bis = new BufferedInputStream(is, 1024);
-                BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
+                BufferedInputStream bis = new BufferedInputStream(is, 256);
+                BufferedOutputStream bos = new BufferedOutputStream(os, 256);
         ) {
             bis.transferTo(bos);
         }
-        Optional<Avatar> avatarOptional = findAvatar(studentId);
-        if (avatarOptional.isEmpty())
-            return;
-        Avatar avatar = avatarOptional.get();
+        Avatar avatar = findAvatar(studentId);
         avatar.setStudent(student);
         avatar.setFilePath(filePath.toString());
         avatar.setFileSize(avatarFile.getSize());
@@ -69,8 +56,8 @@ private final StudentRepository studentRepository;
         avatarRepository.save(avatar);
     }
 
-    private Optional<Avatar> findAvatar(Long id) {
-        return avatarRepository.findById(id);
+    public Avatar findAvatar(Long id) {
+        return avatarRepository.findById(id).orElse(new Avatar());
     }
 
     private String getExtensions(String fileName) {

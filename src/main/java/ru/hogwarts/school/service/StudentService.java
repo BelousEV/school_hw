@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
@@ -23,5 +24,7 @@ public interface StudentService {
     Collection<Student> findByAgeBetween(Long ageMin, Long ageMax); // добавила для запросов БД
 
     Optional<Faculty> findFacultyFromStudentById(Long id);
+
+    Optional<Avatar> findAvatarFromStudentById(Long id);
 
 }
