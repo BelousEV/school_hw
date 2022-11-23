@@ -51,6 +51,12 @@ public class StudentController {
         return ResponseEntity.ok(foundStudent);
     }
 
+
+
+
+
+
+
     @DeleteMapping("{id}") //DELETE http://localhost:8081/students/23
     public ResponseEntity<Long> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
@@ -89,5 +95,10 @@ public class StudentController {
 //            throws IOException {
 //        studentService.findAvatarFromStudentById(studentId);
 //        return ResponseEntity.ok().build();
+//    }
+
+//    @GetMapping (params = "{age}") //добавила для тестов
+//    public Set<Student> findStudentsByAge (@RequestParam(required = false) Integer age){
+//        return studentService.findByAge(age);
 //    }
 }

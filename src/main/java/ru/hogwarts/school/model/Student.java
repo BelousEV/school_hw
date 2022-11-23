@@ -22,6 +22,18 @@ public class Student {
 
     }
 
+    public Student(String name, Long age) { // 21 11 2022 добавила для теста
+        this(null, name, age, null, null);
+    }
+
+    public Student(Long id, String name, Long age, Faculty faculty, Avatar avatar) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.faculty = faculty;
+        this.avatar = avatar;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
