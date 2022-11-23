@@ -65,9 +65,9 @@ public class Student {
         return id;
     }
 
-    public Long getFacultyId() {
-        return faculty.getId();
-    }
+//    public Long getFacultyId() {
+//        return faculty.getId();
+//    }
 
     public String getName() {
         return name;

@@ -182,7 +182,7 @@ public class HogwartsAppTest {
                 .scheme("http")
                 .host("localhost")
                 .port (port)
-                .path("/hogwarts/student");
+                .path("/hogwarts/students");
     }
 
     private ResponseEntity<Student> when_sending_create_student_request(URI uri, Student student) {
