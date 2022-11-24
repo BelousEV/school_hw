@@ -60,4 +60,11 @@ public class AvatarController {
             is.transferTo(os);
         }
     }
+//4.1
+//    @GetMapping(value = "all")
+//    public ResponseEntity<Collection<Avatar>> getAll(@RequestParam("page") Integer pageNumber,
+//                                                     @RequestParam("size") Integer pageSize) {
+//        return avatarService.getAll(pageNumber, pageSize);
+//    }
+
 }

@@ -15,17 +15,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("students")
 public class StudentController {
-
-
     private final StudentService studentService;
-
-
     public StudentController(StudentService studentService) {
-
         this.studentService = studentService;
-
     }
-
     @GetMapping("{id}") //GET http://localhost:8081/students/id
     public ResponseEntity<Student> getStudent(@PathVariable Long id) {
         Optional<Student> student = studentService.findStudent(id);
@@ -33,12 +26,10 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(student.get());
-
     }
 
     @PostMapping  // POST http://localhost:8081/students
     public Student createStudent(@RequestBody Student student) {
-
         return studentService.createStudent(student);
     }
 
@@ -50,12 +41,6 @@ public class StudentController {
         }
         return ResponseEntity.ok(foundStudent);
     }
-
-
-
-
-
-
 
     @DeleteMapping("{id}") //DELETE http://localhost:8081/students/23
     public ResponseEntity<Long> deleteStudent(@PathVariable Long id) {
@@ -73,7 +58,7 @@ public class StudentController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
-    @GetMapping // для SQL БД
+    @GetMapping("/findRange/{ageMin}{ageMax}") // для SQL БД
     public ResponseEntity<Collection<Student>> findStudent(@RequestParam Long ageMin, @RequestParam Long ageMax) {
         Collection<Student> answer = studentService.findByAgeBetween(ageMin, ageMax);
         if (answer.isEmpty()) {
@@ -82,7 +67,7 @@ public class StudentController {
         return ResponseEntity.ok(answer);
     }
 
-    @GetMapping("/getFacultyFromStudentById")
+    @GetMapping("/findFacultyFromStudentById/{id}")
     public ResponseEntity<Faculty> findFacultyFromStudentById(@RequestParam Long id) {
         Optional<Faculty> facultyOptional = studentService.findFacultyFromStudentById(id);
         if (facultyOptional.isEmpty())

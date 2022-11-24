@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +25,8 @@ public class AvatarService {
 
 private final AvatarRepository avatarRepository;
 private final StudentRepository studentRepository;
+
+//    Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     public AvatarService(AvatarRepository avatarRepository, StudentRepository studentRepository) {
         this.avatarRepository = avatarRepository;
@@ -63,4 +66,18 @@ private final StudentRepository studentRepository;
     private String getExtensions(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
+
+    // 4.1
+
+//    public ResponseEntity<Collection<Avatar>> getAll(Integer pageNumber, Integer pageSize) {
+//        logger.info("method to get all of avatars was invoked");
+//        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
+//        Collection<Avatar> avatarsList = avatarRepository.findAll(pageRequest).getContent();
+//        if (avatarsList.isEmpty()) {
+//            logger.error("There is not avatars");
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(avatarsList);
+//    }
+
 }
