@@ -119,7 +119,7 @@ public class HogwartsAppTest {
         URI uri = getUriBuilder().path("/id").buildAndExpand(createStudent.getId()).toUri();
         ResponseEntity<Student> emptyResp = restTemplate.getForEntity(uri, Student.class);
 
-        Assertions.assertThat(emptyResp.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        Assertions.assertThat(emptyResp.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
 
@@ -172,7 +172,7 @@ public class HogwartsAppTest {
     }
 
     private void then_student_has_been_created(ResponseEntity<Student> response) {
-        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         Assertions.assertThat(response.getBody()).isNotNull();
         Assertions.assertThat(response.getBody().getId()).isNotNull();
     }
