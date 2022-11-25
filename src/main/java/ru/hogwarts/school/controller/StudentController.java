@@ -68,7 +68,7 @@ public class StudentController {
     }
 
     @GetMapping("/findFacultyFromStudentById/{id}")
-    public ResponseEntity<Faculty> findFacultyFromStudentById(@RequestParam Long id) {
+    public ResponseEntity<Faculty> findFacultyFromStudentById(@PathVariable Long id) {
         Optional<Faculty> facultyOptional = studentService.findFacultyFromStudentById(id);
         if (facultyOptional.isEmpty())
             return ResponseEntity.notFound().build();

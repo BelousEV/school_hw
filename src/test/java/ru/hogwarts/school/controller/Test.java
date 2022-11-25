@@ -1,4 +1,4 @@
-package ru.hogwarts.school;
+package ru.hogwarts.school.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,7 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
-import ru.hogwarts.school.controller.StudentController;
 import ru.hogwarts.school.model.Student;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,7 +36,7 @@ class HogwartsAppApplicationTests {
 //        String answer = "http://localhost:" + port.toString() + "/students/" + str;
 //        System.out.println(answer);
 //        return answer;
-        return "http://localhost" + port+ "/students/" + str;
+        return "http://localhost:" + port+ "/students" + str;
     }
     @Test
     public void testFaultMessage() throws Exception {
@@ -63,7 +62,7 @@ class HogwartsAppApplicationTests {
 
     @Test
     public void testFindFacultyOfStudent () throws Exception {
-        assertThat(this.restTemplate.getForObject(getUrlStudents("/getFacultyFromStudentById/"), String.class))
+        assertThat(this.restTemplate.getForObject(getUrlStudents("/findFacultyFromStudentById/13"), String.class))
                 .contains("Kogtevran");
     }
 
