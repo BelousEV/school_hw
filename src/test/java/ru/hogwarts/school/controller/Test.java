@@ -28,38 +28,49 @@ class HogwartsAppApplicationTests {
         if (str.isEmpty() || str.isBlank())
             str = "";
         return "http://localhost:" + port.toString() + "/hogwarts/" + str;
-//        return "http://localhost:8081/hogwarts/" + str;
     }
     private String getUrlStudents(String str) {
         if (str.isEmpty() || str.isBlank())
             str = "";
-//        String answer = "http://localhost:" + port.toString() + "/students/" + str;
-//        System.out.println(answer);
-//        return answer;
-        return "http://localhost:" + port+ "/students" + str;
+        return "http://localhost:" + port.toString() + "/hogwarts/students/" + str;
     }
     @Test
-    public void testFaultMessage() throws Exception {
+    public void testDefaultMessage() throws Exception {
         assertThat(this.restTemplate.getForObject(getUrlHogwarts(""), String.class))
                 .contains("WebApp is working");
     }
+
     @Test
-    public void testFindStudentByAgeRange() throws Exception {
-        assertThat(this.restTemplate.getForObject(getUrlStudents("findRange/?ageMin=15&ageMax=20"), String.class))
-                .contains("Name15");
+    public void testGetStudents() throws Exception {
+        assertThat(this.restTemplate.getForObject(getUrlHogwarts(""), String.class))
+                .isNotEmpty();
     }
 
+    @Test
+    public void testPostAndDeleteStudents() throws Exception {
+        Student student = new Student("TestName", 55L);
+        Student answer = this.restTemplate.postForObject(getUrlStudents(""), student, Student.class);
+        assertThat(answer).isNotNull();
+        Long answerId = answer.getId();
+        this.restTemplate.delete(getUrlStudents(answerId.toString()));
+        System.out.println(answerId);
+        assertThat(studentController.getStudent(answerId)).isEqualTo(ResponseEntity.notFound().build());
+    }
     @Test
     public void testFindStudentById () throws Exception {
         assertThat(this.restTemplate.getForObject(getUrlStudents("14"), String.class))
                 .contains("Name14");
     }
     @Test
-    public void testFindStudentByAge () throws Exception {
-        assertThat(this.restTemplate.getForObject(getUrlStudents("/age/17"), String.class))
+    public void testFindStudentByAge() throws Exception {
+        assertThat(this.restTemplate.getForObject(getUrlStudents("age/25"), String.class))
+                .contains("Name12");
+    }
+    @Test
+    public void testFindStudentByAgeRange() throws Exception {
+        assertThat(this.restTemplate.getForObject(getUrlStudents("findRange?ageMin=15&ageMax=20"), String.class))
                 .contains("Name15");
     }
-
     @Test
     public void testFindFacultyOfStudent () throws Exception {
         assertThat(this.restTemplate.getForObject(getUrlStudents("/findFacultyFromStudentById/13"), String.class))
@@ -67,38 +78,21 @@ class HogwartsAppApplicationTests {
     }
 
     @Test
-    public void testAddStudent () throws Exception {
-        Student student = new Student();
-        student.setName("Somebody");
-        student.setAge(100L);
-
-        assertThat(this.restTemplate.postForObject(getUrlStudents(""), student, String.class))
-                .isNotNull();
-    }
-    @Test
     public void testEditStudent () throws Exception {
+        Student answer = this.restTemplate.getForObject(getUrlStudents("14"), Student.class);
+        assertThat(answer).isNotNull();
 
-        Student editStudent = new Student();
-        editStudent.setId(1L);
-        editStudent.setName("Another Name");
-        editStudent.setAge(40L);
+        String oldName = answer.getName();
 
-        this.restTemplate.put("http://localhost:" + port + "/students", editStudent, String.class);
-        assertThat(editStudent.getName()).isEqualTo("Another Name");
+        answer.setName("New Name");
+        this.restTemplate.put(getUrlStudents(""), answer);
 
+        Student answer2 = this.restTemplate.getForObject(getUrlStudents("14"), Student.class);
+        assertThat(answer2).isNotNull();
+
+        assertThat(answer2.getName()).isNotEqualTo(oldName);
+
+        answer.setName(oldName);
+        this.restTemplate.put(getUrlStudents(""), answer);
     }
-
-    @Test
-    public void testDeleteStudent () throws Exception {
-        this.restTemplate.delete("http://localhost:" + port + "/students/7", String.class);
-        assertThat(studentController.getStudent(7L)).isEqualTo(ResponseEntity.notFound().build());
-    }
-
-
-
-
-
-
-
-
 }

@@ -19,7 +19,6 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public Student createStudent(Student student) {
-
         return studentRepository.save(student);
     }
 

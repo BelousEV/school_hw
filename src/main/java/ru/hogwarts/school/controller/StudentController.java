@@ -57,8 +57,7 @@ public class StudentController {
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
-
-    @GetMapping("/findRange/{ageMin}{ageMax}") // для SQL БД
+    @GetMapping(value = "/findRange", params = {"ageMin", "ageMax"}) // для SQL БД
     public ResponseEntity<Collection<Student>> findStudent(@RequestParam Long ageMin, @RequestParam Long ageMax) {
         Collection<Student> answer = studentService.findByAgeBetween(ageMin, ageMax);
         if (answer.isEmpty()) {
