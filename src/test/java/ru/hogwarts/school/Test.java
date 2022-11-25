@@ -37,7 +37,7 @@ class HogwartsAppApplicationTests {
 //        String answer = "http://localhost:" + port.toString() + "/students/" + str;
 //        System.out.println(answer);
 //        return answer;
-        return "http://localhost:8081/students/" + str;
+        return "http://localhost" + port+ "/students/" + str;
     }
     @Test
     public void testFaultMessage() throws Exception {
@@ -63,7 +63,7 @@ class HogwartsAppApplicationTests {
 
     @Test
     public void testFindFacultyOfStudent () throws Exception {
-        assertThat(this.restTemplate.getForObject(getUrlStudents("/getFacultyFromStudentById/13"), String.class))
+        assertThat(this.restTemplate.getForObject(getUrlStudents("/getFacultyFromStudentById/"), String.class))
                 .contains("Kogtevran");
     }
 
