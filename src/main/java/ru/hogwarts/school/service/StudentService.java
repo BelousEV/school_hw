@@ -1,12 +1,16 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.Optional;
 
+@Service
+@Transactional
 public interface StudentService {
 
 //    Student addStudent(Student student);

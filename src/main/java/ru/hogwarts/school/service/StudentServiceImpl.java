@@ -6,10 +6,12 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
 

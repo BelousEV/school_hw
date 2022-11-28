@@ -28,12 +28,12 @@ public class StudentController {
         return ResponseEntity.ok(student.get());
     }
 
-    @PostMapping  // POST http://localhost:8081/students
+    @PostMapping  // POST http://localhost:8081/../students
     public Student createStudent(@RequestBody Student student) {
         return studentService.createStudent(student);
     }
 
-    @PutMapping  //PUT редактирование http://localhost:8081/students
+    @PutMapping  //PUT редактирование http://localhost:8081/../students
     public ResponseEntity<Student> editStudent(@RequestBody Student student) {
         Student foundStudent = studentService.editStudent(student);
         if (foundStudent == null) {
@@ -42,7 +42,7 @@ public class StudentController {
         return ResponseEntity.ok(foundStudent);
     }
 
-    @DeleteMapping("{id}") //DELETE http://localhost:8081/students/23
+    @DeleteMapping("{id}") //DELETE http://localhost:8081/../students/23
     public ResponseEntity<Long> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();

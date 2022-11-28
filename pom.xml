@@ -49,7 +49,10 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
-
+<!--        <dependency>-->
+<!--            <groupId>mock</groupId>-->
+<!--            <artifactId></artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>

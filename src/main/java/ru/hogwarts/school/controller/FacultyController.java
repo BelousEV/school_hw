@@ -13,11 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("faculties")
-
-
 public class FacultyController {
-
-
     private final FacultyService facultyService;
 
     public FacultyController(FacultyService initFacultyService) {

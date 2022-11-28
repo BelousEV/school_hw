@@ -23,8 +23,8 @@ public class AvatarService {
     @Value("${path.to.avatars.folder}")
     private String avatarsDir; // название папки, в которой хранятся авы
 
-private final AvatarRepository avatarRepository;
-private final StudentRepository studentRepository;
+    private final AvatarRepository avatarRepository;
+    private final StudentRepository studentRepository;
 
 //    Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
