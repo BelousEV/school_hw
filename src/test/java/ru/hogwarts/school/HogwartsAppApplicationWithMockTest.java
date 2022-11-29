@@ -16,6 +16,7 @@ import ru.hogwarts.school.repositories.FacultyRepository;
 import ru.hogwarts.school.service.FacultyService;
 import ru.hogwarts.school.service.FacultyServiceImpl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -25,22 +26,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = FacultyController.class)
-//@SpringBootTest
-//@AutoConfigureMockMvc //need this in Spring Boot test
 public class HogwartsAppApplicationWithMockTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
     private FacultyRepository facultyRepository;
-    @MockBean
+    @SpyBean
     private FacultyServiceImpl facultyServiceImpl;
     @SpyBean
     private FacultyService facultyService;
     @InjectMocks
     private FacultyController facultyController;
 
+
     @Test
-    public void saveAndGetFacultyTest() throws Exception {
+    public void saveFacultyTest() throws Exception {
         final Long id = 1L;
         final String name = "SomeName";
         final String color = "SomeColor";
@@ -49,13 +49,10 @@ public class HogwartsAppApplicationWithMockTest {
         facultyObject.put("id", id);
         facultyObject.put("name", name);
         facultyObject.put("color", color);
-        Faculty faculty = new Faculty();
-        faculty.setId(id);
-        faculty.setName(name);
-        faculty.setColor(color);
+
+        Faculty faculty = new Faculty(id, name, color);
 
         when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
-        when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/faculties/")
@@ -67,6 +64,17 @@ public class HogwartsAppApplicationWithMockTest {
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.color").value(color));
+    }
+    @Test
+    public void getFacultyByIdTest() throws Exception {
+        final Long id = 1L;
+        final String name = "SomeName";
+        final String color = "SomeColor";
+
+        Faculty faculty = new Faculty(id, name, color);
+
+        when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
+
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculties/" + id)
                         .accept(MediaType.APPLICATION_JSON)
@@ -79,48 +87,28 @@ public class HogwartsAppApplicationWithMockTest {
 
     @Test
     public void getFacultyByNameOrColor() throws Exception {
-        Long id = 1L;
-        String name = "SomeFaculty";
-        String color = "SomeColor";
+        final Long id = 1L;
+        final String name = "SomeName";
+        final String color = "SomeColor";
 
-        Faculty faculty = new Faculty();
-        faculty.setId(id);
-        faculty.setName(name);
-        faculty.setColor(color);
+        Faculty faculty = new Faculty(id, name, color);
 
-        JSONObject facultyObject = new JSONObject();
-        facultyObject.put("id", id);
-        facultyObject.put("name", name);
-        facultyObject.put("color", color);
+        Collection<Faculty> collectionFaculty = new ArrayList<Faculty>();
+        collectionFaculty.add(faculty);
 
-
-        Collection<Faculty> collectionFaculty = null;
-        collectionFaculty.add(new Faculty(id, name, color));
-        collectionFaculty.add(new Faculty(id+1, name, color));
-        collectionFaculty.add(new Faculty(id+2, name, color));
-
-
-
-        when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
         when(facultyRepository.findByNameIgnoreCaseContainingOrColorIgnoreCaseContaining(color, color))
                 .thenReturn(collectionFaculty);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("/faculties/")
-                        .content(facultyObject.toString())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
+                        .get("/faculties/findByNameOrColor?color=" + color)
+                        .accept((MediaType.APPLICATION_JSON))
                 )
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.name").value(name))
-                .andExpect(jsonPath("$.color").value(color));
-        mockMvc.perform(MockMvcRequestBuilders.get("/faculties?nameOrColor=" + color)
-                        .accept((MediaType.APPLICATION_JSON)))
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.color").value(color));
     }
+}
+
 
 //
 //    @Test
@@ -205,4 +193,3 @@ public class HogwartsAppApplicationWithMockTest {
 //                .andExpect(jsonPath("$[0].age").value(50));
 //    }
 
-}

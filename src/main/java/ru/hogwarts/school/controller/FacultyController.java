@@ -49,7 +49,7 @@ public class FacultyController {
     //1909
 
     // Controller
-    @GetMapping("/color/{color}")
+    @GetMapping()
     public ResponseEntity<Collection<Faculty>> findFaculties(@PathVariable String color) {
         if (color != null && !color.isBlank()) {
             return ResponseEntity.ok(facultyService.findByColor(color));
@@ -61,7 +61,7 @@ public class FacultyController {
     public ResponseEntity<Collection<Faculty>> getAll() {
         return ResponseEntity.ok(facultyService.getAll());//вероятно, лишнее о_О
     }
-    @GetMapping
+    @GetMapping("/findByNameOrColor/{color}") //http://localhost:8081/faculties/findByNameOrColor/{color}
     public ResponseEntity<Collection<Faculty>> findByNameContainingOrColorContaining(@RequestParam String nameOrColor) {
         if (nameOrColor.isBlank()) {
             return ResponseEntity.ok(Collections.emptyList());
