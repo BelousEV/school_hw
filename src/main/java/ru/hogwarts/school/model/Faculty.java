@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 
 @Entity
@@ -21,6 +22,12 @@ public class Faculty {
     private Collection<Student> students;
     public Faculty(){
 
+    }
+    public Faculty(Long id, String name, String color){
+        setId(id);
+        setName(name);
+        setColor(color);
+        students = Collections.emptyList();
     }
 
 
