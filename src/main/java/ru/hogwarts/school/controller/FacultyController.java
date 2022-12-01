@@ -17,7 +17,7 @@ public class FacultyController {
     private final FacultyService facultyService;
 
     public FacultyController(FacultyService initFacultyService) {
-         facultyService = initFacultyService;
+        facultyService = initFacultyService;
     }
     @GetMapping("{id}") //http://localhost:8081/faculties/23
     public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
@@ -46,23 +46,11 @@ public class FacultyController {
         return ResponseEntity.ok().build();
     }
 
-    //1909
-
-    // Controller
-    @GetMapping()
-    public ResponseEntity<Collection<Faculty>> findFaculties(@PathVariable String color) {
-        if (color != null && !color.isBlank()) {
-            return ResponseEntity.ok(facultyService.findByColor(color));
-        }
-        return ResponseEntity.ok(Collections.emptyList());
-    }
-
-
     public ResponseEntity<Collection<Faculty>> getAll() {
         return ResponseEntity.ok(facultyService.getAll());//вероятно, лишнее о_О
     }
-    @GetMapping("/findByNameOrColor/{color}") //http://localhost:8081/faculties/findByNameOrColor/{color}
-    public ResponseEntity<Collection<Faculty>> findByNameContainingOrColorContaining(@RequestParam String nameOrColor) {
+    @GetMapping("/findByNameOrColor/{nameOrColor}") //http://localhost:8081/faculties/findByNameOrColor/{color}
+    public ResponseEntity<Collection<Faculty>> findByNameContainingOrColorContaining(@PathVariable String nameOrColor) {
         if (nameOrColor.isBlank()) {
             return ResponseEntity.ok(Collections.emptyList());
         }

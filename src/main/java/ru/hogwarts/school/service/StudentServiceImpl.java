@@ -8,6 +8,7 @@ import ru.hogwarts.school.repositories.StudentRepository;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,7 +40,9 @@ public class StudentServiceImpl implements StudentService {
     public Collection<Student> getAll() {
         return studentRepository.findAll();
     }
-
+    public Long getStudentsCount() { return studentRepository.getAmountOfAllStudents(); }
+    public Long getMeanAge() { return studentRepository.getAverageAgeAllStudents(); }
+    public List<Student> getLastFiveStudents() { return studentRepository.getLastFiveStudents(); }
     // Service
     public Collection<Student> findByAge(Long age) {
         return studentRepository.findByAge(age);

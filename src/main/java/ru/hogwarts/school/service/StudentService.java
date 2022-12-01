@@ -7,6 +7,7 @@ import ru.hogwarts.school.model.Student;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,4 +32,7 @@ public interface StudentService {
 
     Optional<Avatar> findAvatarFromStudentById(Long id);
 
+    Long getMeanAge();
+    Long getStudentsCount();
+    List<Student> getLastFiveStudents();
 }

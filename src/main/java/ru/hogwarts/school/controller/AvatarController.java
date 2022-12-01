@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("avatars")
@@ -28,7 +30,6 @@ public class AvatarController {
         this.avatarService = avatarService;
         this.avatarRepository = avatarRepository;
     }
-
 
     @PostMapping(value = "/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE) // загружаем в базу
     public ResponseEntity<String> uploadAvatar(@PathVariable Long studentId,
@@ -61,10 +62,13 @@ public class AvatarController {
         }
     }
 //4.1
-//    @GetMapping(value = "all")
-//    public ResponseEntity<Collection<Avatar>> getAll(@RequestParam("page") Integer pageNumber,
-//                                                     @RequestParam("size") Integer pageSize) {
-//        return avatarService.getAll(pageNumber, pageSize);
-//    }
+    @GetMapping(value = "allAvatars_4.1")
+    public Collection<Avatar> getAll(@RequestParam("page") Integer pageNumber,
+                                                     @RequestParam("size") Integer pageSize) {
+        var pageRequest = PageRequest.of(0, 10);
+        var answer = avatarRepository.findAll(pageRequest);
+
+        return answer.getContent();
+    }
 
 }

@@ -9,6 +9,7 @@ import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -72,6 +73,19 @@ public class StudentController {
         if (facultyOptional.isEmpty())
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(facultyOptional.get());
+    }
+
+    @GetMapping("getMeanAge")
+    public Long getMeanAge() {
+        return studentService.getMeanAge();
+    }
+    @GetMapping("getStudentsCount")
+    public Long getStudentsCount() {
+        return studentService.getStudentsCount();
+    }
+    @GetMapping("getLastFiveStudents")
+    public List<Student> getLastFiveStudents() {
+        return studentService.getLastFiveStudents();
     }
 
 //    @PostMapping(value = "/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE) // загрузка файла
