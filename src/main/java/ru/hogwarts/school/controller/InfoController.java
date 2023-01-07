@@ -25,10 +25,7 @@ public class InfoController {
         return port;
     }
 
-    @GetMapping("/testParallelStream")
-    public void testParallelStream() {
 
-    }
 }
 
 
