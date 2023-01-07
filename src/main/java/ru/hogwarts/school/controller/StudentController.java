@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 
 @RestController
@@ -99,4 +101,15 @@ public class StudentController {
 //    public Set<Student> findStudentsByAge (@RequestParam(required = false) Integer age){
 //        return studentService.findByAge(age);
 //    }
+
+    //4.5
+    @GetMapping("/findStudentNamesWhichStartedWhichA") // ссылка http://localhost:8081/students/findStudentNamesWhichStartedWhichA
+    public Stream<String> findStudentNamesWhichStartedWhichA(){
+        return studentService.findStudentNamesWhichStartedWhichA();
+    }
+
+    @GetMapping("/findStudentAverageAge") // ссылка http://localhost:8081/students/findStudentAverageAge
+    public double findStudentAverageAge(){
+        return studentService.findStudentAverageAge();
+    }
 }

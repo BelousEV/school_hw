@@ -63,4 +63,15 @@ public class FacultyServiceImpl implements FacultyService {
         return answer.get().getStudents();
     }
 
+    //4.5
+
+
+    public String findTheLongestFacultyName(){
+        return facultyRepository.findAll()
+                .stream()
+                .map(Faculty::getName)
+                .max((f1, f2) -> f1.length() - f2.length())
+                .orElseThrow(null);
+    }
+
 }

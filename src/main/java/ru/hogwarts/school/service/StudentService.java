@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -35,4 +36,9 @@ public interface StudentService {
     Long getMeanAge();
     Long getStudentsCount();
     List<Student> getLastFiveStudents();
+
+
+    Stream<String> findStudentNamesWhichStartedWhichA();
+
+    double findStudentAverageAge();
 }

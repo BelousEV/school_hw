@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -78,5 +80,21 @@ public class StudentServiceImpl implements StudentService {
         if (studentOptional.isEmpty())
             return Optional.empty();
         return studentOptional.get().getAvatar();
+    }
+
+    //4.5
+    public Stream<String> findStudentNamesWhichStartedWhichA(){
+        return studentRepository.findAll().stream()
+                .map(Student::getName)
+                .map(String::toUpperCase)
+                .filter(s -> s.startsWith("A"))
+                .sorted();
+    }
+
+    public double findStudentAverageAge(){
+        return studentRepository.findAll().stream()
+                .mapToDouble(Student::getAge)
+                .average()
+                .orElseThrow(null);
     }
 }
