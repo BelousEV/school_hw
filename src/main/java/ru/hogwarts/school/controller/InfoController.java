@@ -24,7 +24,14 @@ public class InfoController {
     public int getPort() {
         return port;
     }
-
+    @GetMapping("/printStudents")
+    public void printStudents() {
+        infoService.printStudents();
+    }
+    @GetMapping("/printStudentsSync")
+    public void printStudentsSync() {
+        infoService.printStudentsSync();
+    }
 
 }
 
